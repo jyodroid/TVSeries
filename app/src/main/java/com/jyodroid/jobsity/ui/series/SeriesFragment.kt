@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jyodroid.jobsity.R
 import com.jyodroid.jobsity.databinding.FragmentSeriesBinding
@@ -69,7 +69,10 @@ class SeriesFragment : Fragment() {
 
     private fun RecyclerView.configure() {
         adapter = seriesAdapter
-        layoutManager = LinearLayoutManager(activity)
+        val columnCount = resources.getInteger(R.integer.series_grid_size)
+        val gridLayoutManager =
+            GridLayoutManager(activity, columnCount, GridLayoutManager.VERTICAL, false)
+        layoutManager = gridLayoutManager
     }
 
     private fun SearchView?.configure() {
