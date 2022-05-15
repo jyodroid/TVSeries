@@ -8,10 +8,10 @@
         android:id="@+id/series_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/screen_margin"
         android:clipToPadding="false"
-        android:paddingBottom="100dp"
-        android:layout_marginStart="20dp"
         android:paddingTop="8dp"
+        android:paddingBottom="100dp"
         tools:context=".ui.series.SeriesFragment"
         tools:listitem="@layout/series_list_item" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,4 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SeriesNameStyle">
+        <item name="android:textColor">@color/text_dark_blue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GenresStyle">
+        <item name="android:textColor">@color/purpureus</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
 </resources>

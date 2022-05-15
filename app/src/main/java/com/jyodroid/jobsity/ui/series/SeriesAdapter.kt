@@ -11,7 +11,8 @@ import com.jyodroid.jobsity.R
 import com.jyodroid.jobsity.databinding.SeriesListItemBinding
 import com.jyodroid.jobsity.model.business.Series
 
-class SeriesAdapter : PagingDataAdapter<Series, SeriesAdapter.ViewHolder>(SeriesDiffCallBack()) {
+class SeriesAdapter(private val seriesListener: SeriesListener) :
+    PagingDataAdapter<Series, SeriesAdapter.ViewHolder>(SeriesDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             SeriesListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -41,7 +42,7 @@ class SeriesAdapter : PagingDataAdapter<Series, SeriesAdapter.ViewHolder>(Series
             view.seriesListItemGenres.text = genres
 
             view.seriesListItemRating.text = series.averageRating?.toString() ?: "0.0"
-//            view.root.setOnClickListener { memberLookupListener.onMemberClick(member) }
+            view.root.setOnClickListener { seriesListener?.onSeriesSelected(series) }
         }
     }
 
@@ -50,5 +51,9 @@ class SeriesAdapter : PagingDataAdapter<Series, SeriesAdapter.ViewHolder>(Series
 
         override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean =
             oldItem == newItem
+    }
+
+    interface SeriesListener {
+        fun onSeriesSelected(series: Series)
     }
 }

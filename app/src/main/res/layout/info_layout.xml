@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="100dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/screen_margin">
+
+        <TextView
+            android:id="@+id/series_detail_name"
+            style="@style/SeriesNameStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="start"
+            app:layout_constraintBottom_toTopOf="@+id/series_details_summary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Start Trek: Strange" />
+
+        <TextView
+            android:id="@+id/series_detail_genres"
+            style="@style/GenresStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/series_details_summary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/series_detail_name"
+            tools:text="action - adventure - horror" />
+
+        <TextView
+            android:id="@+id/series_details_summary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/series_detail_genres"
+            tools:text="In other English-speaking countries, unique placeholder names, numbers or codenames have become more often used in the context of police investigations. This has included the United Kingdom, where usage of John Doe originated during the Middle Ages. However, the legal term John Doe injunction or John Doe order[4] has survived in English law and other legal systems influenced by it. Other names, such as Joe Bloggs or John Smith, have sometimes been informally used as placeholders for an everyman in the UK, Australia and New Zealand; however such names are seldom used in legal or police circles in the same sense as John Doe." />
+
+        <ImageView
+            android:id="@+id/series_detail_aired_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_calendar_week_solid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/series_details_aired_info_container" />
+
+        <LinearLayout
+            android:id="@+id/series_details_aired_info_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/series_detail_aired_icon"
+            app:layout_constraintTop_toBottomOf="@+id/series_details_summary">
+
+            <TextView
+                android:id="@+id/series_details_aired_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:textColor="@color/text_dark_blue"
+                android:textSize="16sp"
+                tools:text="Monday, Tuesday at 10:00 pm on Showtime." />
+
+            <TextView
+                android:id="@+id/series_details_aired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:textColor="@color/text_dark_blue"
+                android:textSize="16sp"
+                tools:text="2015 - now" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

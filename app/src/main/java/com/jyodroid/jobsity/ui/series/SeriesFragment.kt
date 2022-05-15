@@ -9,23 +9,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jyodroid.jobsity.R
 import com.jyodroid.jobsity.databinding.FragmentSeriesBinding
+import com.jyodroid.jobsity.model.business.Series
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SeriesFragment : Fragment() {
+class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
 
     private var _binding: FragmentSeriesBinding? = null
     private val binding get() = _binding!!
 
     private val seriesViewModel by viewModels<SeriesViewModel>()
-    private val seriesAdapter by lazy { SeriesAdapter() }
+    private val seriesAdapter by lazy { SeriesAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,5 +125,10 @@ class SeriesFragment : Fragment() {
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
             //TODO handle error in a better way
         }
+    }
+
+    override fun onSeriesSelected(series: Series) {
+        val directions = SeriesFragmentDirections.navigateToSeriesDetails(series)
+        findNavController().navigate(directions)
     }
 }

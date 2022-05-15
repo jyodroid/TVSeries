@@ -3,4 +3,8 @@
     <string name="title_series">Series</string>
     <string name="title_search">Search</string>
     <string name="search_hint">Series Name</string>
+    <string name="series_detail_title">Series Details</string>
+    <string name="series_detail_aired_info">%1$s at %2$s on %3$s.</string>
+    <string name="series_detail_aired">%1$s - %2$s</string>
+    <string name="now">now</string>
 </resources>
