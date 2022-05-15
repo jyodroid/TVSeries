@@ -8,8 +8,8 @@
         android:title="@string/title_series" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_magnifying_glass_solid"
-        android:contentDescription="@string/title_search"
-        android:title="@string/title_search" />
+        android:id="@+id/navigation_people"
+        android:icon="@drawable/ic_person_through_window_solid"
+        android:contentDescription="@string/title_people"
+        android:title="@string/title_people" />
 </menu>

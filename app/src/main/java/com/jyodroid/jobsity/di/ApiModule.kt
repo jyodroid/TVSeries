@@ -2,6 +2,7 @@ package com.jyodroid.jobsity.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.jyodroid.jobsity.BuildConfig
+import com.jyodroid.jobsity.api.EpisodeService
 import com.jyodroid.jobsity.api.SeriesService
 import com.jyodroid.jobsity.api.networkresponse.NetworkResponseAdapterFactory
 import dagger.Module
@@ -58,4 +59,9 @@ class ApiModule {
     @Provides
     fun provideSeriesService(retrofit: Retrofit): SeriesService =
         retrofit.create(SeriesService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideEpisodesService(retrofit: Retrofit): EpisodeService =
+        retrofit.create(EpisodeService::class.java)
 }

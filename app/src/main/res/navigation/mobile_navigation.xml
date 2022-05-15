@@ -20,16 +20,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.jyodroid.jobsity.ui.search.SearchFragment"
-        android:label="@string/title_search"
+        android:id="@+id/navigation_people"
+        android:name="com.jyodroid.jobsity.ui.people.PeopleFragment"
+        android:label="@string/title_people"
         tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.jyodroid.jobsity.ui.notifications.NotificationsFragment"
-        android:label="Notifications"
-        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/series_details"

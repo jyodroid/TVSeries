@@ -1,13 +1,13 @@
-package com.jyodroid.jobsity.ui.notifications
+package com.jyodroid.jobsity.ui.people
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class PeopleViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "Coming Soon"
     }
     val text: LiveData<String> = _text
 }

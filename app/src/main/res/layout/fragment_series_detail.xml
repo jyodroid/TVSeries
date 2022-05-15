@@ -19,7 +19,7 @@
             <ImageView
                 android:id="@+id/series_detail_poster"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="380dp"
                 android:scaleType="fitXY"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_image_regular" />

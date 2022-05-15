@@ -1,42 +1,33 @@
-package com.jyodroid.jobsity.ui.series
+package com.jyodroid.jobsity.ui.episode
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.jyodroid.jobsity.model.business.Series
+import com.jyodroid.jobsity.model.business.Episode
 import com.jyodroid.jobsity.model.dto.Result
-import com.jyodroid.jobsity.repository.SeriesRepository
+import com.jyodroid.jobsity.repository.EpisodeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SeriesViewModel @Inject constructor(private val seriesRepository: SeriesRepository) :
+class EpisodeViewModel @Inject constructor(private val episodeRepository: EpisodeRepository) :
     ViewModel() {
-    private val logTag = SeriesViewModel::class.java.canonicalName
+    private val logTag = EpisodeViewModel::class.java.canonicalName
 
-    val pagingDataFlow: Flow<PagingData<Series>>
+    private val _episodesLiveData = MutableLiveData<List<Episode>?>()
+    val episodesLiveData: LiveData<List<Episode>?>
+        get() = _episodesLiveData
+
     private val _errorLiveData = MutableLiveData<String>()
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
-    private val _seriesResultLiveData = MutableLiveData<List<Series>?>()
-    val seriesResultLiveData: LiveData<List<Series>?>
-        get() = _seriesResultLiveData
 
-    init {
-        pagingDataFlow = getSeries().cachedIn(viewModelScope)
-    }
-
-    private fun getSeries(): Flow<PagingData<Series>> = seriesRepository.getShows()
-
-    fun searchSeries(query: String) {
+    fun getEpisodeList(seriesId: Int) {
         viewModelScope.launch {
-            when (val result = seriesRepository.searchShows(query)) {
+            when (val result = episodeRepository.getEpisodeList(seriesId)) {
                 is Result.Failure -> {
                     Log.e(
                         logTag,
@@ -48,7 +39,7 @@ class SeriesViewModel @Inject constructor(private val seriesRepository: SeriesRe
                     Log.e(logTag, "Unknown error", result.e)
                     _errorLiveData.postValue(result.e?.message ?: "")
                 }
-                is Result.Success -> _seriesResultLiveData.postValue(result.data)
+                is Result.Success -> _episodesLiveData.postValue(result.data)
             }
         }
     }

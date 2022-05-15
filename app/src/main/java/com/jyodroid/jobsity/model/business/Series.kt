@@ -6,8 +6,10 @@ import java.util.*
 
 @Parcelize
 data class Series(
+    val id: Int,
     val name: String,
     val posterUrl: String,
+    val mainPosterUrl: String? = null,
     val genres: List<String>? = null,
     val averageRating: Float? = null,
     val summary: String? = null,

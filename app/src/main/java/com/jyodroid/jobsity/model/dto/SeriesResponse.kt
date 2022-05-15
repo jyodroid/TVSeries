@@ -21,8 +21,10 @@ data class SeriesResponse(
 
 fun SeriesResponse.toSeries(): Series {
     return Series(
+        id = this.id,
         name = this.name,
         posterUrl = this.image?.medium ?: "",
+        mainPosterUrl = image?.original,
         genres = this.genres,
         averageRating = this.rating?.average,
         summary = HtmlCompat.fromHtml(summary ?: "", HtmlCompat.FROM_HTML_MODE_LEGACY).toString(),
