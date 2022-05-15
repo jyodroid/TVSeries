@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TvSeries</string>
+    <string name="title_series">Series</string>
+    <string name="title_search">Search</string>
+</resources>
