@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.jyodroid.jobsity.api.SeriesService
 import com.jyodroid.jobsity.api.networkresponse.NetworkResponse
 import com.jyodroid.jobsity.model.business.Series
-import com.jyodroid.jobsity.model.dto.SeriesResponse
+import com.jyodroid.jobsity.model.dto.toSeries
 
 private const val TV_MAZE_STARTING_PAGE = 0
 
@@ -38,14 +38,5 @@ class SeriesPagingSource(
             }
             is NetworkResponse.UnknownError -> LoadResult.Error((Error("Unknown Error")))
         }
-    }
-
-    private fun SeriesResponse.toSeries(): Series {
-        return Series(
-            name = this.name,
-            posterUrl = this.image.medium ?: "",
-            genres = this.genres,
-            averageRating = this.rating?.average
-        )
     }
 }

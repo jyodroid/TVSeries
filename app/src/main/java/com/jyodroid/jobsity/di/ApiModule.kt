@@ -21,7 +21,9 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
     private val timeout = 30L
-    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val json: Json = Json {
+        ignoreUnknownKeys = true
+    }
 
     @ExperimentalSerializationApi
     private val jsonConverter = json.asConverterFactory("application/json".toMediaType())
