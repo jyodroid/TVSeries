@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.jyodroid.tvseries.ui.series.SeriesFragment"
+        android:label="@string/title_series"
+        tools:layout="@layout/fragment_series">
+        <action
+            android:id="@+id/navigate_to_series_details"
+            app:destination="@id/series_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/series_details"
+        android:name="com.jyodroid.tvseries.ui.series.SeriesDetailFragment"
+        android:label="@string/series_detail_title"
+        tools:layout="@layout/fragment_series_detail">
+        <argument
+            android:name="series"
+            app:argType="com.jyodroid.tvseries.model.business.Series" />
+
+        <action
+            android:id="@+id/navigate_to_episode_details"
+            app:destination="@id/episode_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/episode_details"
+        android:name="com.jyodroid.tvseries.ui.episode.EpisodeFragment"
+        android:label="@string/episode_detail_title"
+        tools:layout="@layout/fragment_episode">
+        <argument
+            android:name="episode"
+            app:argType="com.jyodroid.tvseries.model.business.Episode" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_people"
+        android:name="com.jyodroid.tvseries.ui.people.PeopleFragment"
+        android:label="@string/title_people"
+        tools:layout="@layout/fragment_people" />
+</navigation>

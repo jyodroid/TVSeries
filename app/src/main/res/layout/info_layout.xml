@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -99,7 +101,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/series_details_episodes_list"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="500dp"
             android:clipToPadding="false"
             android:paddingBottom="100dp"
             app:layout_constraintStart_toStartOf="parent"
