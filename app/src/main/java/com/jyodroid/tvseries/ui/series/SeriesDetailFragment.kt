@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -25,6 +26,8 @@ import com.jyodroid.tvseries.model.business.Episode
 import com.jyodroid.tvseries.ui.episode.EpisodeAdapter
 import com.jyodroid.tvseries.ui.episode.EpisodeItem
 import com.jyodroid.tvseries.ui.episode.EpisodeViewModel
+import com.jyodroid.tvseries.utils.hide
+import com.jyodroid.tvseries.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +38,13 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
     private val episodeViewModel by viewModels<EpisodeViewModel>()
 
     private val args: SeriesDetailFragmentArgs by navArgs()
+    private val seriesName by lazy { args.series.name }
+
+    private val alertDialog by lazy {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.create()
+    }
 
     private val episodeAdapter by lazy {
         EpisodeAdapter(this)
@@ -45,6 +55,7 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSeriesDetailBinding.inflate(inflater, container, false)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = seriesName
         val currentOrientation = resources.configuration.orientation
         if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) configureToolbar()
         else setHasOptionsMenu(true)
@@ -52,6 +63,7 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
         initObservers()
         if (episodeViewModel.episodesLiveData.value == null) {
             episodeViewModel.getEpisodeList(args.series.id)
+            binding.progressBar.show()
         }
         return binding.root
     }
@@ -69,7 +81,8 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
     }
 
     override fun onEpisodeSelected(episode: Episode) {
-        val directions = SeriesDetailFragmentDirections.navigateToEpisodeDetails(episode)
+        val directions =
+            SeriesDetailFragmentDirections.navigateToEpisodeDetails(episode, seriesName)
         findNavController().navigate(directions)
     }
 
@@ -85,7 +98,6 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
             .into(binding.seriesDetailPoster)
 
         binding.details.apply {
-            seriesDetailName.text = series.name
             seriesDetailsSummary.text = series.summary
             seriesDetailGenres.text = series.genres?.joinToString(" - ")
             val days = series.days?.joinToString(", ")
@@ -134,11 +146,12 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
             }
 
             episodeAdapter.submitList(episodeItemList)
+            binding.progressBar.hide()
         }
 
         episodeViewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-            //TODO handle error in a better way
+            showAlertDialog(R.string.error_alert, getString(R.string.unable_to_load_episodes))
+            binding.progressBar.hide()
         }
     }
 
@@ -149,7 +162,7 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
             val navColor = ContextCompat.getColor(requireContext(), R.color.white)
             navigationIcon?.setTint(navColor)
             setNavigationOnClickListener { findNavController().popBackStack() }
-            title = getString(R.string.series_detail_title)
+            title = seriesName
         }
         binding.collapsingToolbarLayout?.setExpandedTitleColor(
             ContextCompat.getColor(
@@ -157,5 +170,13 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
                 android.R.color.transparent
             )
         )
+    }
+
+    private fun showAlertDialog(@StringRes title: Int, message: String) {
+        alertDialog.apply {
+            setTitle(title)
+            setMessage(message)
+            show()
+        }
     }
 }

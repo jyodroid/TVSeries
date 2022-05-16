@@ -13,4 +13,12 @@
     <string name="undefined_season">Unknown season</string>
     <string name="episode_label">Season %1$d episode %2$d</string>
     <string name="episode_premiered_label">Premiered on %s</string>
+    <string name="search_alert">Searching Series</string>
+    <string name="not_results_found">No results found for %s</string>
+    <string name="error_alert">Sorry!</string>
+    <string name="error_alert_description">Oh no! we are having problems right now \n\n%s</string>
+    <string name="retry">Retry</string>
+    <string name="please_check_internet">Please check your internet connection</string>
+    <string name="unable_to_load_episodes">We could not load episodes for this series at this moment please try again later</string>
+    <string name="unknown_error_message">Unknown Error</string>
 </resources>

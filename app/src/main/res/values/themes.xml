@@ -50,4 +50,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="LoadingProgress">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">?attr/colorSecondary</item>
+        <item name="android:indeterminateTintMode">src_atop</item>
+    </style>
 </resources>

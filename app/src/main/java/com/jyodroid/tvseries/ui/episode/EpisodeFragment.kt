@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,6 +28,7 @@ class EpisodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEpisodeBinding.inflate(inflater, container, false)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = args.seriesName
         setHasOptionsMenu(true)
         initUI()
         return binding.root
@@ -47,25 +49,26 @@ class EpisodeFragment : Fragment() {
     private fun initUI() {
         val episode = args.episode
 
-        binding.episodeName.text = episode.name
-        binding.episodeLabel.text =
-            getString(R.string.episode_label, episode.season, episode.number)
-        binding.episodePremierDate.text =
-            getString(
-                R.string.episode_premiered_label,
-                episode.emissionDate?.convertToCompleteStringDate()
-            )
+        with(binding) {
+            episodeName.text = episode.name
+            episodeLabel.text =
+                getString(R.string.episode_label, episode.season, episode.number)
+            episodePremierDate.text =
+                getString(
+                    R.string.episode_premiered_label,
+                    episode.emissionDate?.convertToCompleteStringDate()
+                )
 
-        binding.episodeSummary.text = episode.summary
+            episodeSummary.text = episode.summary
 
-        Glide
-            .with(this)
-            .load(episode.mainPosterUrl)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .placeholder(R.drawable.ic_tv_solid)
-            .error(R.drawable.ic_tv_solid)
-            .transition(withCrossFade())
-            .into(binding.episodePoster)
+            Glide
+                .with(requireContext())
+                .load(episode.mainPosterUrl)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .placeholder(R.drawable.ic_tv_solid)
+                .error(R.drawable.ic_tv_solid)
+                .transition(withCrossFade())
+                .into(episodePoster)
+        }
     }
-
 }

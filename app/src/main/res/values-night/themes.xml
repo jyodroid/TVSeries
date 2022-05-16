@@ -25,6 +25,7 @@
 
     <style name="GenresStyle">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.NormalText</item>
+        <item name="android:textColor">@color/light_blue</item>
     </style>
 
     <style name="SeriesInfoStyle">

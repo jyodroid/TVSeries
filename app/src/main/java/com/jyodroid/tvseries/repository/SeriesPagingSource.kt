@@ -21,7 +21,7 @@ class SeriesPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Series> {
         val position = params.key ?: TV_MAZE_STARTING_PAGE
-        return when (val response = seriesService.getSeries(1)) {
+        return when (val response = seriesService.getSeries(position)) {
             is NetworkResponse.ApiError -> LoadResult.Error(Error(response.body?.message))
             is NetworkResponse.NetworkError -> LoadResult.Error(response.error)
             is NetworkResponse.Success -> {

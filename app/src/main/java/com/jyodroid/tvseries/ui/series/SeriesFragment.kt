@@ -5,20 +5,24 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jyodroid.tvseries.R
 import com.jyodroid.tvseries.databinding.FragmentSeriesBinding
 import com.jyodroid.tvseries.model.business.Series
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 @AndroidEntryPoint
 class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
@@ -27,7 +31,15 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
     private val binding get() = _binding!!
 
     private val seriesViewModel by viewModels<SeriesViewModel>()
-    private val seriesAdapter by lazy { SeriesAdapter(this) }
+    private val seriesAdapter by lazy {
+        SeriesAdapter(this)
+    }
+
+    private val alertDialog by lazy {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.create()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +53,11 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
     ): View {
         _binding = FragmentSeriesBinding.inflate(inflater, container, false)
 
-        binding.seriesList.configure()
+        with(binding) {
+            seriesSwipeRefresh.configure()
+            seriesList.configure()
+        }
+
         collectUIState()
 
         return binding.root
@@ -55,6 +71,11 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onSeriesSelected(series: Series) {
+        val directions = SeriesFragmentDirections.navigateToSeriesDetails(series)
+        findNavController().navigate(directions)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -64,12 +85,40 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             seriesViewModel.pagingDataFlow.collectLatest { seriesPaging ->
                 seriesAdapter.submitData(seriesPaging)
+                binding.seriesSwipeRefresh.isRefreshing = false
             }
         }
     }
 
     private fun RecyclerView.configure() {
-        adapter = seriesAdapter
+        seriesAdapter.addLoadStateListener { combinedLoadStates ->
+            if (combinedLoadStates.refresh is LoadState.Error) {
+                val errorState = (combinedLoadStates.refresh as? LoadState.Error)?.error
+                val message =
+                    if (errorState is UnknownHostException) {
+                        requireContext().getString(R.string.please_check_internet)
+                    } else {
+                        requireContext().getString(
+                            R.string.error_alert_description,
+                            errorState?.message
+                                ?: requireContext().getString(R.string.unknown_error_message)
+                        )
+                    }
+                showAlertDialog(
+                    R.string.error_alert,
+                    getString(
+                        R.string.error_alert_description,
+                        message
+                    )
+                )
+                binding.seriesSwipeRefresh.isRefreshing = false
+            }
+        }
+
+        adapter = seriesAdapter.withLoadStateHeaderAndFooter(
+            header = SeriesLoadingAdapter(seriesAdapter::retry),
+            footer = SeriesLoadingAdapter(seriesAdapter::retry)
+        )
         val columnCount = resources.getInteger(R.integer.series_grid_size)
         val gridLayoutManager =
             GridLayoutManager(activity, columnCount, GridLayoutManager.VERTICAL, false)
@@ -127,7 +176,10 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
     private fun initObservers() {
         seriesViewModel.seriesResultLiveData.observe(viewLifecycleOwner) { series ->
             if (series.isNullOrEmpty()) {
-                //TODO: Show no result placeholder
+                showAlertDialog(
+                    R.string.search_alert,
+                    getString(R.string.not_results_found, seriesViewModel.query)
+                )
             } else {
                 viewLifecycleOwner.lifecycleScope.launch {
                     val pagingData = PagingData.from(data = series.toMutableList())
@@ -137,13 +189,19 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         }
 
         seriesViewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-            //TODO handle error in a better way
+            showAlertDialog(R.string.error_alert, getString(R.string.error_alert_description, it))
         }
     }
 
-    override fun onSeriesSelected(series: Series) {
-        val directions = SeriesFragmentDirections.navigateToSeriesDetails(series)
-        findNavController().navigate(directions)
+    private fun showAlertDialog(@StringRes title: Int, message: String) {
+        alertDialog.apply {
+            setTitle(title)
+            setMessage(message)
+            show()
+        }
+    }
+
+    private fun SwipeRefreshLayout.configure() {
+        this.setOnRefreshListener { seriesAdapter.refresh() }
     }
 }

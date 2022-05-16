@@ -45,6 +45,10 @@
         <argument
             android:name="episode"
             app:argType="com.jyodroid.tvseries.model.business.Episode" />
+
+        <argument
+            android:name="seriesName"
+            app:argType="string" />
     </fragment>
 
     <fragment
