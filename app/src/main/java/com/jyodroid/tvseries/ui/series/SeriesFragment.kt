@@ -42,7 +42,6 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         _binding = FragmentSeriesBinding.inflate(inflater, container, false)
 
         binding.seriesList.configure()
-        initObservers()
         collectUIState()
 
         return binding.root
@@ -83,6 +82,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
             setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
             queryHint = getString(R.string.search_hint)
             maxWidth = Integer.MAX_VALUE
+            isIconified = true
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -95,16 +95,31 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
                 }
             })
 
-            setOnCloseListener { closeSearch() }
+            setOnCloseListener {
+                if (query.isNullOrEmpty()) {
+                    onActionViewCollapsed()
+                    closeSearch()
+                } else true
+
+            }
             setOnSearchClickListener {
+                initObservers()
                 viewLifecycleOwner.lifecycleScope.launch {
                     seriesAdapter.submitData(PagingData.empty())
                 }
+            }
+
+            if (seriesViewModel.query != null) {
+                initObservers()
+                this.requestFocus()
+                this.setQuery(seriesViewModel.query, true)
+                isIconified = false
             }
         }
     }
 
     private fun closeSearch(): Boolean {
+        seriesViewModel.query = null
         collectUIState()
         return false
     }

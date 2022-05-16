@@ -20,6 +20,8 @@ class SeriesViewModel @Inject constructor(private val seriesRepository: SeriesRe
     ViewModel() {
     private val logTag = SeriesViewModel::class.java.canonicalName
 
+    var query: String? = null
+
     val pagingDataFlow: Flow<PagingData<Series>>
     private val _errorLiveData = MutableLiveData<String>()
     val errorLiveData: LiveData<String>
@@ -35,6 +37,7 @@ class SeriesViewModel @Inject constructor(private val seriesRepository: SeriesRe
     private fun getSeries(): Flow<PagingData<Series>> = seriesRepository.getShows()
 
     fun searchSeries(query: String) {
+        this.query = query
         viewModelScope.launch {
             when (val result = seriesRepository.searchShows(query)) {
                 is Result.Failure -> {

@@ -10,7 +10,7 @@
     android:elevation="8dp"
     android:stateListAnimator="@animator/selector_raise"
     app:cardBackgroundColor="@color/lightest_blue"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
