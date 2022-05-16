@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.TvSeries" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -8,26 +8,46 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pearly_purple</item>
         <item name="colorSecondaryVariant">@color/purpureus</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/lightest_blue</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="SeriesNameStyle">
-        <item name="android:textColor">@color/text_dark_blue</item>
+    <style name="TextAppearance.AppCompat.TitleText">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="SeriesCardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="elevation">8dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="cardBackgroundColor">?attr/colorOnSecondary</item>
+        <item name="android:stateListAnimator">@animator/selector_raise</item>
+    </style>
+
+    <style name="SeriesNameStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.TitleText</item>
+        <item name="android:textColor">@color/text_dark_blue</item>
+    </style>
+
     <style name="GenresStyle">
         <item name="android:textColor">@color/purpureus</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.NormalText</item>
+    </style>
+
+    <style name="SeriesInfoStyle">
+        <item name="android:textColor">@color/text_dark_blue</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.NormalText</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.NormalText">
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="EpisodeImageShape">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
-
 </resources>

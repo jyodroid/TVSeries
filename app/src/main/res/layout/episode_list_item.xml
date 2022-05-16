@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="12dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingVertical="12dp">
 
     <TextView
         android:id="@+id/episode_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.NormalText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,8 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="4dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.NormalText"
             tools:text="0.0" />
     </LinearLayout>
 

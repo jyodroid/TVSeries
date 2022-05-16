@@ -42,7 +42,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,20 +69,18 @@
 
             <TextView
                 android:id="@+id/series_details_aired_info"
+                style="@style/SeriesInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp"
                 tools:text="Monday, Tuesday at 10:00 pm on Showtime." />
 
             <TextView
                 android:id="@+id/series_details_aired"
+                style="@style/SeriesInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp"
                 tools:text="2015 - now" />
         </LinearLayout>
 

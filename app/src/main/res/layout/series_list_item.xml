@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SeriesCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
-    android:layout_marginEnd="@dimen/screen_margin"
-    android:elevation="8dp"
-    android:stateListAnimator="@animator/selector_raise"
-    app:cardBackgroundColor="@color/lightest_blue"
-    app:cardCornerRadius="8dp">
+    android:layout_marginEnd="@dimen/screen_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -68,10 +65,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.NormalText"
                 tools:text="0.0" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
 
