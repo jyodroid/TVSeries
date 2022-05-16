@@ -62,8 +62,8 @@ class EpisodeFragment : Fragment() {
             .with(this)
             .load(episode.mainPosterUrl)
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .placeholder(R.drawable.ic_image_regular)
-            .error(R.drawable.ic_image_regular)
+            .placeholder(R.drawable.ic_tv_solid)
+            .error(R.drawable.ic_tv_solid)
             .transition(withCrossFade())
             .into(binding.episodePoster)
     }
