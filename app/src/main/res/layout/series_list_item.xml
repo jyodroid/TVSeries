@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/SeriesCardStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
-    android:layout_marginEnd="@dimen/screen_margin">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

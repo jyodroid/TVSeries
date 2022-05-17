@@ -100,8 +100,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
                     } else {
                         requireContext().getString(
                             R.string.error_alert_description,
-                            errorState?.message
-                                ?: requireContext().getString(R.string.unknown_error_message)
+                            errorState?.message ?: context.getString(R.string.unknown_error_message)
                         )
                     }
                 showAlertDialog(
@@ -123,6 +122,8 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         val gridLayoutManager =
             GridLayoutManager(activity, columnCount, GridLayoutManager.VERTICAL, false)
         layoutManager = gridLayoutManager
+        val space = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
+        addItemDecoration(SeriesGridItemDecorator(space))
     }
 
     private fun SearchView?.configure() {

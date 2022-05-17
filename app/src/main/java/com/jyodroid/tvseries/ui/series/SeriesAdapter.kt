@@ -27,7 +27,6 @@ class SeriesAdapter(private val seriesListener: SeriesListener) :
     inner class ViewHolder(private val view: SeriesListItemBinding) :
         RecyclerView.ViewHolder(view.root) {
         fun bind(series: Series) {
-
             Glide
                 .with(view.root)
                 .load(series.posterUrl)
@@ -42,7 +41,7 @@ class SeriesAdapter(private val seriesListener: SeriesListener) :
             view.seriesListItemGenres.text = genres
 
             view.seriesListItemRating.text = series.averageRating?.toString() ?: "0.0"
-            view.root.setOnClickListener { seriesListener?.onSeriesSelected(series) }
+            view.root.setOnClickListener { seriesListener.onSeriesSelected(series) }
         }
     }
 

@@ -22,7 +22,7 @@
 
     <style name="SeriesCardStyle" parent="Widget.MaterialComponents.CardView">
         <item name="elevation">8dp</item>
-        <item name="cornerRadius">8dp</item>
+        <item name="cornerRadius">12dp</item>
         <item name="cardBackgroundColor">?attr/colorOnSecondary</item>
         <item name="android:stateListAnimator">@animator/selector_raise</item>
     </style>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lightest_blue">#F1F3F4</color>
+    <color name="lightest_blue">#E2EFF6</color>
     <color name="light_blue">#82bfe2</color>
     <color name="dark_blue">#489dde</color>
     <color name="text_dark_blue">#043C67</color>
