@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 const val MAZE_DATE_FORMAT = "yyyy-MM-dd"
-const val COMPLETE_DATE_FORMAT = "EEE, MMM dd, yyyy"
+const val COMPLETE_DATE_FORMAT = "EEEE, MMM dd, yyyy"
 
 private const val TAG = "com.jyodroid.tvseries.utils.DateTimeFormatter"
 
