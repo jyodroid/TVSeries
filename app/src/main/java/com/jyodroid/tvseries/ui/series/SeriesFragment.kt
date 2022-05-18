@@ -125,7 +125,6 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             seriesViewModel.pagingDataFlow.collectLatest { seriesPaging ->
                 seriesAdapter.submitData(seriesPaging)
-                binding.seriesSwipeRefresh.isRefreshing = false
             }
         }
     }
@@ -151,6 +150,9 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
                     )
                 )
                 binding.seriesSwipeRefresh.isRefreshing = false
+            }
+            if(combinedLoadStates.refresh is LoadState.NotLoading){
+                kotlin.runCatching { binding.seriesSwipeRefresh.isRefreshing = false }
             }
         }
 
@@ -236,7 +238,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         }
     }
 
-    private fun initLockScreenObserver(){
+    private fun initLockScreenObserver() {
         lockViewModel.screenLockedLiveData.observe(viewLifecycleOwner) { locked ->
             if (locked) {
                 val navController = findNavController()
