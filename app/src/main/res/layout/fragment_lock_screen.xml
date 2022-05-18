@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:imeOptions="actionGo"
+            android:imeOptions="actionDone"
             tools:text="123456" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,6 +53,17 @@
         android:layout_height="wrap_content"
         android:text="@string/access"
         android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_input" />
+
+    <ImageView
+        android:id="@+id/biometrics_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="16dp"
+        android:src="@drawable/ic_fingerprint_solid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pin_input" />

@@ -12,8 +12,12 @@ class LockViewModel : ViewModel() {
         get() = _screenLockedLiveData
 
     fun unlockScreen(pin: String, sharedPreferences: SharedPreferences) {
-        val storedPin = sharedPreferences.getString(pinCodeKey, null)
-        _screenLockedLiveData.postValue(pin != storedPin)
+        val storedPin = sharedPreferences.getString(pinCodeKey, "")
+        _screenLockedLiveData.postValue(pin.trim() != storedPin?.trim())
+    }
+
+    fun unlockScreen() {
+        _screenLockedLiveData.postValue(false)
     }
 
     fun lockScreen() {

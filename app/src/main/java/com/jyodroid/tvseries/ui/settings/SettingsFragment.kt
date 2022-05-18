@@ -16,7 +16,7 @@ import com.jyodroid.tvseries.R
 
 const val pinCodeKey = "pin_code"
 const val enablePinKey = "enable_pin"
-const val enableFingerPrintKey = "enable_pin"
+const val enableFingerPrintKey = "enable_fingerprint"
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val prefs by lazy {

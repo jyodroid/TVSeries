@@ -31,4 +31,8 @@
     <string name="access">Access</string>
     <string name="pin_lock_error">Please enable pin lock from settings</string>
     <string name="wrong_pin">Wrong pin!</string>
+    <string name="biometrics_title">Biometric Authentication</string>
+    <string name="biometrics_subtitle">Enter biometric credentials to proceed.</string>
+    <string name="biometrics_description">Input your Fingerprint or FaceID to ensure it\'s you!</string>
+    <string name="biometrics_error">Error unlocking</string>
 </resources>
