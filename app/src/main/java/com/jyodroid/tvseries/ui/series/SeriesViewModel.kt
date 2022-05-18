@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jyodroid.tvseries.model.business.Series
-import com.jyodroid.tvseries.model.dto.NetworkResponse
 import com.jyodroid.tvseries.model.dto.Result
 import com.jyodroid.tvseries.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

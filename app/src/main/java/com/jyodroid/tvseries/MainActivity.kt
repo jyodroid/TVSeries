@@ -46,10 +46,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?,
     ) {
         when (destination.id) {
-            R.id.series_details -> {
+            R.id.navigation_lock_screen -> {
+                binding.navView.hide()
+                supportActionBar?.hide()
+            }
+            R.id.navigation_series_details -> {
                 binding.navView.hide()
             }
-            R.id.episode_details -> {
+            R.id.navigation_episode_details -> {
                 binding.navView.hide()
                 supportActionBar?.show()
             }

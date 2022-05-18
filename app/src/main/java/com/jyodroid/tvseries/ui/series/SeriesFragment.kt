@@ -8,17 +8,20 @@ import android.widget.SearchView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jyodroid.tvseries.R
 import com.jyodroid.tvseries.databinding.FragmentSeriesBinding
 import com.jyodroid.tvseries.model.business.Series
+import com.jyodroid.tvseries.ui.lockscreen.LockViewModel
+import com.jyodroid.tvseries.ui.settings.enablePinKey
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,15 +33,20 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
     private var _binding: FragmentSeriesBinding? = null
     private val binding get() = _binding!!
 
-    private val seriesViewModel by viewModels<SeriesViewModel>()
+    private val lockViewModel by activityViewModels<LockViewModel>()
+    private val seriesViewModel by activityViewModels<SeriesViewModel>()
     private val seriesAdapter by lazy {
         SeriesAdapter(this)
     }
 
     private val alertDialog by lazy {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton(android.R.string.ok, null)
-        builder.create()
+        AlertDialog.Builder(requireContext()).also {
+            it.setPositiveButton(android.R.string.ok, null)
+        }.create()
+    }
+
+    private val prefs by lazy {
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,22 +71,54 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initLockScreenObserver()
+        val isEnabledPinLock = prefs.getBoolean(enablePinKey, false)
+        if (isEnabledPinLock) {
+            if (lockViewModel.screenLockedLiveData.value == null) {
+                val navController = findNavController()
+                navController.navigate(R.id.navigation_lock_screen)
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
+        inflater.inflate(R.menu.home_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as? SearchView
         searchView.configure()
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onSeriesSelected(series: Series) {
-        val directions = SeriesFragmentDirections.navigateToSeriesDetails(series)
-        findNavController().navigate(directions)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.lock_screen -> {
+                val isEnabledPinLock = prefs.getBoolean(enablePinKey, false)
+                if (isEnabledPinLock) {
+                    lockViewModel.lockScreen()
+                } else {
+                    showAlertDialog(R.string.error_alert, getString(R.string.pin_lock_error))
+                }
+                true
+            }
+            R.id.settings -> {
+                val directions = SeriesFragmentDirections.navigateToSettings()
+                findNavController().navigate(directions)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onSeriesSelected(series: Series) {
+        val directions = SeriesFragmentDirections.navigateToSeriesDetails(series)
+        findNavController().navigate(directions)
     }
 
     private fun collectUIState() {
@@ -137,6 +177,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     seriesViewModel.searchSeries(query)
+                    binding.seriesSwipeRefresh.isEnabled = false
                     return true
                 }
 
@@ -171,6 +212,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
     private fun closeSearch(): Boolean {
         seriesViewModel.query = null
         collectUIState()
+        binding.seriesSwipeRefresh.isEnabled = true
         return false
     }
 
@@ -191,6 +233,15 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
 
         seriesViewModel.errorLiveData.observe(viewLifecycleOwner) {
             showAlertDialog(R.string.error_alert, getString(R.string.error_alert_description, it))
+        }
+    }
+
+    private fun initLockScreenObserver(){
+        lockViewModel.screenLockedLiveData.observe(viewLifecycleOwner) { locked ->
+            if (locked) {
+                val navController = findNavController()
+                navController.navigate(R.id.navigation_lock_screen)
+            }
         }
     }
 

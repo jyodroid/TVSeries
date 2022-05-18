@@ -56,4 +56,22 @@
         <item name="android:indeterminateTint">?attr/colorSecondary</item>
         <item name="android:indeterminateTintMode">src_atop</item>
     </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="errorIconTint">@color/error_red</item>
+        <item name="errorTextColor">@color/error_red</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="hintEnabled">true</item>
+        <item name="android:hint">@string/pin_code</item>
+    </style>
+
+    <style name="TextInputEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="maxLines">1</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:letterSpacing">0.3</item>
+        <item name="android:inputType">textPassword</item>
+    </style>
 </resources>

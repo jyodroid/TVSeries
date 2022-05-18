@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:key="pin_code"
+        android:title="@string/set_pin_code" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="enable_pin"
+        android:title="@string/enable_pin_code" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="enable_fingerprint"
+        android:title="@string/enable_fingerprint"
+        app:isPreferenceVisible="false" />
+</PreferenceScreen>

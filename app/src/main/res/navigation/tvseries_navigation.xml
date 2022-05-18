@@ -12,7 +12,15 @@
         tools:layout="@layout/fragment_series">
         <action
             android:id="@+id/navigate_to_series_details"
-            app:destination="@id/series_details"
+            app:destination="@id/navigation_series_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/navigate_to_settings"
+            app:destination="@id/navigation_settings"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -20,7 +28,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/series_details"
+        android:id="@+id/navigation_series_details"
         android:name="com.jyodroid.tvseries.ui.series.SeriesDetailFragment"
         android:label="@string/series_detail_title"
         tools:layout="@layout/fragment_series_detail">
@@ -30,7 +38,7 @@
 
         <action
             android:id="@+id/navigate_to_episode_details"
-            app:destination="@id/episode_details"
+            app:destination="@id/navigation_episode_details"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -38,7 +46,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/episode_details"
+        android:id="@+id/navigation_episode_details"
         android:name="com.jyodroid.tvseries.ui.episode.EpisodeFragment"
         android:label="@string/episode_detail_title"
         tools:layout="@layout/fragment_episode">
@@ -50,6 +58,17 @@
             android:name="seriesName"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.jyodroid.tvseries.ui.settings.SettingsFragment"
+        android:label="@string/settings" />
+
+    <fragment
+        android:id="@+id/navigation_lock_screen"
+        android:name="com.jyodroid.tvseries.ui.lockscreen.LockScreenFragment"
+        android:label="@string/lock_screen"
+        tools:layout="@layout/fragment_lock_screen" />
 
     <fragment
         android:id="@+id/navigation_people"
