@@ -149,7 +149,7 @@ class SeriesFragment : SeriesAdapter.SeriesListener, Fragment() {
                         message
                     )
                 )
-                binding.seriesSwipeRefresh.isRefreshing = false
+                kotlin.runCatching { binding.seriesSwipeRefresh.isRefreshing = false }
             }
             if(combinedLoadStates.refresh is LoadState.NotLoading){
                 kotlin.runCatching { binding.seriesSwipeRefresh.isRefreshing = false }
