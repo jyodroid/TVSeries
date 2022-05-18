@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -35,7 +36,7 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
     private var _binding: FragmentSeriesDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val episodeViewModel by activityViewModels<EpisodeViewModel>()
+    private val episodeViewModel by viewModels<EpisodeViewModel>()
 
     private val args: SeriesDetailFragmentArgs by navArgs()
     private val seriesName by lazy { args.series.name }
