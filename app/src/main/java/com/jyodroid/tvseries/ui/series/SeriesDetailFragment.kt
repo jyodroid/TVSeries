@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.material.icons.materialIcon
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -159,7 +161,9 @@ class SeriesDetailFragment : EpisodeAdapter.EpisodeListener, Fragment() {
     private fun configureToolbar() {
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
         binding.seriesDetailsToolbar?.apply {
-            setNavigationIcon(androidx.constraintlayout.widget.R.drawable.abc_ic_ab_back_material)
+            val backArrow = AppCompatResources.getDrawable(requireContext(), androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+
+            setNavigationIcon(backArrow)
             val navColor = ContextCompat.getColor(requireContext(), R.color.white)
             navigationIcon?.setTint(navColor)
             setNavigationOnClickListener { findNavController().popBackStack() }
